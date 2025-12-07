@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Run Steps
 
 - Backend
@@ -11,3 +12,6 @@ Run Steps
   - cd client
   - npm install
   - npm run build or npm run dev
+=======
+# Appointments-Scheduler
+>>>>>>> df5822edb39748ef56d0a6d5fec40fa4bc13053c
