@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  name          String
+  email         String        @unique
+  phone         String        @unique
+  passwordHash  String
+  role          String        @default("USER")
+  status        String        @default("ACTIVE")
+  appointments  Appointment[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Slot {
+  id        Int       @id @default(autoincrement())
+  date      DateTime  // date for the slot day
+  startTime DateTime
+  endTime   DateTime
+  available Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Appointment {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [userId], references: [id])
+  userId        Int
+  date          DateTime
+  time          DateTime
+  status        String    @default("PENDING")
+  tokenNumber   Int
+  billAmount    Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([date, time])
+}
+
+// enums replaced with strings for SQLite compatibility
